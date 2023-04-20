@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BooksForever.Каталог книг</title>
+    <link rel="stylesheet" href="../css/main.css"/>
+    <link rel="stylesheet" href="../css/catalog.css"/>
+    <style>
+        .btn-addbook{
+            background-color:deepskyblue;
+            border: 2px solid rgb(112, 112, 112);
+            border-radius: 8px;
+            font-size: 20px;
+            margin-left: 10px;
+            text-decoration: none;
+            color: black;
+            padding: 5px 10px;
+
+        }
+        .sticky {
+            position: fixed;
+            top: 0;
+            width: 100%;
+        }
+        #btnTop {
+            display: none;
+            position: fixed;
+            bottom: 110px;
+            right: 170px;
+            z-index: 99;
+            font-size: 18px;
+            border: none;
+            outline: none;
+            background-color: aqua;
+            color: rgb(0, 0, 0);
+            cursor: pointer;
+            padding: 15px;
+            border-radius: 4px;
+        }
+
+        #btnTop:hover {
+            background-color: #555;
+            color: white;
+        }
+
+        #popups {
+            position: absolute;
+        }
+
+        #searchField.error {
+            background-color: rgba(211, 56, 56, 0.103);
+        }
+
+        div.suggestions {
+            background-color: white;
+            padding: 2px 6px;
+            border: 1px solid black;
+        }
+
+        div.suggestions:hover {
+            background-color: blue;
+        }
+    </style>
+    <script>
+        var bookArray = new Array()
+        var filterGenres = new Array(0)
+        var filterPublisher = new Array(0)
+        function onLoadPage(){
+            document.getElementById("searchField").onkeyup = searchSuggest
+            var request = new XMLHttpRequest()
+            request.onreadystatechange = function(){
+                if (request.readyState != 4) return;
+                if (request.status != 200) {
+                        alert('Ошибка!')
+                } else {
+                    displayBooks(JSON.parse(request.responseText))
+                }
+            }
+            request.open('GET', 'http://localhost:5187/getBooks', true)
+            request.send()
+        }
+        function displayBooks(books){
+            var result = ""
+            let i = 0
+            for (book of books){
+                bookArray[i] = book["name"]
+                i++
+                result+= `<div class="item">
+                        <p><a href="./crooked-kingdom.html"><strong>${book["name"]}</strong></a></p>
+                        <div class="item-content">
+                            <div class="item-content-img">
+                                <img src="../images/${book["name"]}1.jpg" width="20%" height="20%"/>
+                                <ul>
+                                    <li><strong>Автор: ${book["author"]}</strong></li>
+                                    <li><strong>Жанр: ${book["genre"]}</strong></li>
+                                    <li><strong>Страниц: ${book["pages"]}</strong></li>
+                                    <li><strong>Год издания: ${book["yearOfPubl"]}</strong></li>
+                                    <li><strong>Издательство: ${book["publisher"]}</strong></li>
+                                </ul>
+                            </div>
+                            <div>
+                                <p>${book["description"]}</p>
+                            </div>
+                        </div>
+                    </div>` 
+            }
+            const div = document.getElementById("catalog")
+            div.innerHTML = result
+        }
+        function searchSuggest() {
+            var str = document.getElementById("searchField").value;
+            document.getElementById("searchField").className = "";
+            if (str != "") {
+                document.getElementById("popups").innerHTML = "";
+                
+                for (var i=0; i<bookArray.length; i++) {
+                    var book = bookArray[i];
+                
+                    if (book.toLowerCase().indexOf(str.toLowerCase()) == 0) {
+                        var tempDiv = document.createElement("div");
+                        tempDiv.innerHTML = book;
+                        tempDiv.onclick = makeChoice;
+                        tempDiv.className = "suggestions";
+                        document.getElementById("popups").appendChild(tempDiv);
+                    }
+                }
+                var foundCt = document.getElementById("popups").childNodes.length;
+                if (foundCt == 0) {
+                    document.getElementById("searchField").className = "error";
+                }
+            }
+        }
+            
+        function makeChoice(evt) {
+            var thisDiv = (evt) ? evt.target : window.event.srcElement;
+            document.getElementById("searchField").value = thisDiv.innerHTML;
+            document.getElementById("popups").innerHTML = "";
+        }
+        
+        function search(){
+            const search = document.getElementById("searchField")
+            var str = search.value
+            if (str === ""){
+                onLoadPage()
+                return;
+            }
+            
+            var request = new XMLHttpRequest()
+            request.onreadystatechange = function(){
+                if (request.readyState != 4) return;
+                if (request.status != 200) {
+                        alert('Ошибка!')
+                } else {
+                    displayBooks(JSON.parse(request.responseText))
+                }
+            }
+            let url = new URL('http://localhost:5187/getBooksByName')
+            url.searchParams.set('name', str)
+            request.open('GET', url, true)
+            request.send()
+        }
+        function searchWithFilters(){
+            filter()
+            var request = new XMLHttpRequest()
+            request.onreadystatechange = function(){
+            if (request.readyState != 4) return;
+                if (request.status != 200) {
+                    alert('Ошибка!')
+                } else {
+                    displayBooks(JSON.parse(request.responseText))
+                }
+            }
+            if (filterGenres.length == 0 && filterPublisher.length == 0){
+                onLoadPage()
+                return
+            }
+            let url = new URL('http://localhost:5187/getBooksByFilters')
+            for (let f of filterPublisher){
+                url.searchParams.set('publishers', f)
+            }
+            for (let f of filterGenres){
+                url.searchParams.set('genres', f)
+            }
+            request.open('GET', url, true)
+            request.send()
+
+            
+        }
+        function filter(){
+            filterGenres = []
+            filterPublisher = []
+            var checkboxList = document.getElementsByClassName("genre-checkbox")
+            for(var i=0; i < checkboxList.length; ++i){
+                if(checkboxList[i].checked){
+                    filterGenres.push(checkboxList[i].value);
+                }
+            }
+            checkboxList = document.getElementsByClassName("publisher-checkbox")
+            for(var i=0; i < checkboxList.length; ++i){
+                if(checkboxList[i].checked){
+                    filterPublisher.push(checkboxList[i].value);
+                }
+            }
+            console.log(filterGenres)
+            console.log(filterPublisher)
+        }
+        window.onload = onLoadPage
+    </script>
+</head>
+<body>
+    <div class="main-container">
+        <header id="navbar" class="header-nav">
+            <span class="site-name">BooksForever</span>
+            <nav  class="main-nav">
+                <ul class="nav-ul">
+                    <li><a href="../index.html">Главная</a></li>
+                    <li><a href="catalog.html">Каталог</a></a>
+                    <li><a href="catalog.html">Подборки</a></li>
+                    <li><a href="articles.html">Статьи</a></li>
+                </ul>
+            </nav>
+            <div class="login">
+                <ul>
+                    <li class="login-li"><a href="#">Регистрация</a></li>
+                    <li class="login-li"><a href="#">Войти</a></li>
+                </ul>
+            </div>
+        </header>
+        <script>
+            window.onscroll = function() {myFunction()};
+
+            var navbar = document.getElementById("navbar");
+            var sticky = navbar.offsetTop;
+    
+            function myFunction() {
+                if (window.pageYOffset >= sticky) {
+                    navbar.classList.add("sticky")
+                } else {
+                    navbar.classList.remove("sticky");
+                }
+                scrollFunction();
+            }
+
+            function scrollFunction() {
+                if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                     document.getElementById("btnTop").style.display = "block";
+                } else {
+                    document.getElementById("btnTop").style.display = "none";
+                }
+            }
+            function topFunction() {
+                document.documentElement.scrollTop = 0;
+            }
+        </script>
+        <main class="content-container">
+            <div class="main-content">
+                <div style="margin-bottom: 15px;">
+                    <h1>Каталог</h1>
+                    <a class="btn-addbook" href="./books/add-book.html">Добавить книгу</a>
+                </div>
+                
+                <div class="search-nav">
+                    <div class="filters">
+                        <form>
+                            <div class="search">
+                                <input id="searchField" type="text" autocomplete="off"/>
+                                <input id="btnSearch" type="button" onclick="search()" value="поиск"/>
+                            </div>
+                            <div id="popups"> </div>
+                            <ul style="list-style-type: none;">
+                                <li class="filter-list-element"><p>Жанр</p>
+                                    <label>
+                                        <input class="genre-checkbox" type="checkbox" value="Фентези">
+                                        Фентези
+                                    </label>
+                                    <label>
+                                        <input class="genre-checkbox" type="checkbox" value="Детектив">
+                                        Детектив
+                                    </label>
+                                    <label>
+                                    <input class="genre-checkbox" type="checkbox" value="Классика">
+                                        Классика
+                                    </label>    
+                                </li>
+                                <li class="filter-list-element"><p>Издательство</p>
+                                    <label>
+                                        <input class="publisher-checkbox" type="checkbox" value="Иностранка">
+                                        Иностранка
+                                    </label>
+                                    <label>
+                                        <input class="publisher-checkbox" type="checkbox" value="АСТ">
+                                        АСТ
+                                    </label>
+                                    <label>
+                                        <input class="publisher-checkbox" type="checkbox" value="Азбука">
+                                        Азбука
+                                    </label>    
+                                </li>
+                            </ul>
+                            <input id="btnSearchFilter" type="button" onclick="searchWithFilters()" value="подобрать"/>
+                        </form>
+                    </div>
+                </div>
+                <div id="catalog" class="catalog" ></div>
+                <button onclick="topFunction()" id="btnTop">Наверх</button>
+            </div>
+            
+        </main>
+        <footer class="main-footer">
+            <div class="footer-content">
+                <p>Контакты</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

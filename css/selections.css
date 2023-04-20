@@ -1,0 +1,16 @@
+.items{
+    display: flex;
+    justify-content: space-around;
+    margin-right: 10%;
+}
+
+.item{
+    width: 16em;
+    height: 16em;
+    background-color: aliceblue;
+    border: 2px dashed royalblue;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

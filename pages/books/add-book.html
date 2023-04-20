@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BooksForever.Книжный каталог главная страница</title>
+    <link rel="stylesheet" href="../../css/main.css"/>
+    <style>
+        form{
+            font-size: 20px;
+            border: 1px solid black;
+        }
+
+        form > div {
+            padding-bottom: 10px;
+            padding-top: 4px;
+            padding-left: 2px;
+        }
+        form > div > input{
+            float: right;
+            margin-right: 60%;
+        }
+
+        form > div > select{
+            float: right;
+	    width: 177px;
+            margin-right: 60%;
+        }
+
+        .description-area{
+            display: flex;
+            flex-direction: column;
+        }
+
+        .description-area textarea{
+            display: block;
+        }
+
+        .btn-submit{
+            margin: 2px 5px 2px;
+        }
+
+        
+    </style>
+    <script>
+        var id = 20;
+        function validate(){
+            event.preventDefault()
+            const name = document.getElementById('name')
+            const author = document.getElementById('author')
+            const yearOfPubl = document.getElementById('yearOfPubl')
+            const pages = document.getElementById('pages')
+            const publisher = document.getElementById('publisher')
+            const genre = document.getElementById('genre')
+            const description = document.getElementsByName('description')[0]
+            const descriptionError = document.getElementById('descriptionError')
+            var errors = false
+
+            if (name.value == "" || !(/^[a-zA-Zа-яА-Я\-0123456789№# ]*$/i.test(name.value))){
+                name.style.border = "2px solid red"
+                errors = true
+            }else{
+                name.style.border = "2px solid green"
+            }
+
+            if (author.value == "" || !(/^[a-zA-Zа-яА-Я\- ]*$/i.test(author.value))){
+                author.style.border = "2px solid red"
+                errors = true
+            }else{
+                author.style.border = "2px solid green"
+            }
+
+            if (yearOfPubl.value == "" | yearOfPubl.value < 1000 | yearOfPubl.value > 2022 | String(yearOfPubl.value).charAt(0) == '0'){
+                yearOfPubl.style.border = "2px solid red"
+                errors = true
+            }else{
+                yearOfPubl.style.border = "2px solid green"
+            }
+
+            if (pages.value == "" | pages.value < 1){
+                pages.style.border = "2px solid red"
+                errors = true
+            }else{
+                pages.style.border = "2px solid green"
+            }
+
+            if (publisher.value == "" || !(/^[a-zA-Zа-яА-Я\-0123456789№ ]*$/i.test(publisher.value))){
+                publisher.style.border = "2px solid red"
+                errors = true
+            }else{
+                publisher.style.border = "2px solid green"
+            }
+
+            if (genre.value == ""){
+                genre.style.border = "2px solid red"
+                errors = true
+            }else{
+                genre.style.border = "2px solid green"
+            }
+            
+            if (/^[/%#&~$]+$/i.test(description.value) || description.value.length < 10){
+                descriptionError.hidden = false
+                errors = true
+            }else{
+                descriptionError.hidden = true
+            }
+
+            if (!errors){
+                let obj = `{ "id": ${id},`+
+                    `"name": "${name.value}",`+
+                    `"author": "${author.value}",` +
+                    `"yearOfPubl": ${yearOfPubl.value},` +
+                    `"pages": ${pages.value},` +
+                    `"publisher": "${publisher.value}",` +
+                    `"genre": "${genre.value}",` +
+                    `"description": "${description.value}" }` 
+                console.log(obj)
+                var request = new XMLHttpRequest()
+                request.onreadystatechange = function(){
+                    if (request.readyState != 4) return;
+                    if (request.status != 200) {
+                            alert('Ошибка!')
+                    } else {
+                        alert('Успешно!')
+                    }
+                }
+                
+                request.open("POST", 'http://localhost:5187/addBook')
+                request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+                request.send(obj)
+                id++
+            }
+        }
+
+        function load() {
+            var request = new XMLHttpRequest()
+            request.onreadystatechange = function(){
+                if (request.readyState != 4) return;
+                if (request.status != 200) {
+                    alert('Ошибка!')
+                } else {
+                    var fields = JSON.parse(request.responseText)
+                    let res = `Название: ${fields["name"]}\nАвтор: ${fields["author"]}\n`+
+                        `Год издания: ${fields["yearOfPubl"]}\nСтраницы: ${fields["pages"]}\n`+
+                        `Издательство: ${fields["publisher"]}\nЖанр: ${fields["genre"]}\n`+
+                        `Описание: ${fields["description"]}`
+                    alert(res)
+                }
+            }
+            request.open('GET', 'book.json', true)
+            request.send()
+        }
+    </script>
+</head>
+<body>
+    <div class="main-container">
+        <header class="header-nav">
+            <span class="site-name">BooksForever</span>
+            <nav class="main-nav">
+                <ul class="nav-ul">
+                    <li><a  href="../../index.html">Главная</a></li>
+                    <li><a  href="../catalog.html">Каталог</a></a>
+                    <li><a  href="../selections.html">Подборки</a></li>
+                    <li><a  href="../articles.html">Статьи</a></li>
+                </ul>
+            </nav>
+            <div class="login">
+                <ul>
+                    <li class="login-li"><a href="#">Регистрация</a></li>
+                    <li class="login-li"><a href="#">Войти</a></li>
+                </ul>
+            </div>
+        </header>
+        <main class="content-container">
+            <div class="main-content">
+                <h1>BooksForever Добавление книги</h1>
+                <form id="addBookForm">
+                    <div>
+                        <label for="name">Название: </label>
+                        <input id="name" type="text" name="name" />
+                    </div>
+                    
+                    <div>
+                        <label for="author">Автор: </label>
+                        <input id="author" type="text" name="author" />
+                    </div>
+                    
+                    <div>
+                        <label for="yearOfPubl">Год издания: </label>
+                        <input id="yearOfPubl" type="number" name="yearOfPubl" />
+                    </div>
+                    
+                    <div>
+                        <label for="pages">Количество страниц: </label>
+                        <input id="pages" type="number" name="pages" />
+                    </div>
+                    
+                    <div>
+                        <label for="publisher">Издательство: </label>
+                        <input id="publisher" type="text" name="publisher" />
+                        
+                    </div>
+                    
+                    <div>
+                        <label for="genre">Жанр: </label>
+                        <select id='genre'>
+                            <option></option>
+                            <option value='Фентези'>Фантастика</option>
+                            <option value='Детектив'>Детектив</option>
+                            <option value='Классика'>Классика</option>
+                            <option value='Компьютерная литература'>Компьютерная литература</option>
+                            <option value='Прочее'>Прочее</option>
+                        </select>
+                    </div>
+                    
+                    <div class="description-area">
+                        <label for="description">Описание: </label>
+                        <textarea style="margin-right: 15%;"  rows="10" id="description" type="text" name="description"></textarea>
+                        <span id="descriptionError" style="color: red;" hidden>
+                            Описание должно содержать не менее 60 символов (включая пробелы).
+                            Запрещённые символы: "/", "%", "#", "&", "~", "$".</span>
+                    </div>
+                    
+                    <input class="btn-submit" type="submit" onclick="validate()" value="Отправить"/>
+                </form>
+                <input class="btn-submit" type="submit" onclick="load()" value="Загрузить пример"/>
+            </div>
+        </main>
+        <footer class="main-footer">
+            <div class="footer-content">
+                <p>Контакты</p>
+            </div>
+        </footer>
+    </div>
+
+</body>
+</html>

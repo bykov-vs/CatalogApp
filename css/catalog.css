@@ -1,0 +1,99 @@
+.item{
+    border: 1px solid royalblue;
+    background-color: rgb(182, 235, 245);
+    padding: 1px 1px 1px;
+    border-radius: 4px;
+    margin-top: 10px;
+}
+
+.item a{
+    text-decoration: none;
+    border: 1px solid royalblue;
+    background-color: aliceblue;
+    font-size: 24px;
+    color: black;
+    padding: 3px;
+}
+
+.item a:hover{
+    color: aliceblue;
+    background-color: black;
+}
+.item-content{
+    column-count: 2;
+    padding-right: 5px;
+}
+
+.item-content-img{
+    display: flex;
+    margin: 3px;
+}
+
+.item p{
+    font-size: 18px;
+}
+
+.item ul{
+    padding: 0%;
+    margin-left: 20px;
+    list-style-type: none;
+}
+
+
+.catalog{
+    margin-left: 30%;
+    width: 60%;
+}
+
+.search-nav{
+    padding-right: 5px;
+    margin-right: 5px;
+    float: left;
+	width: 25%;
+    border: 1px solid burlywood;
+    border-radius: 8px;
+}
+.search{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+#searchField, #btnSearch{
+    font-size: 18px;
+}
+.filters{
+    margin: 10px;
+}
+
+.filters li{
+    font-size: 22px;
+    display: block;
+    border: 1px dashed gray;
+}
+
+.filters li > label{
+    font-size: 22px;
+}
+
+.search{
+    height: 20px;
+}
+.search button{
+    margin-left: 5px;
+}
+
+
+.filters ul{
+    margin: initial;
+    padding: initial;
+}
+.filter-list-element{
+    margin-top: 5px;
+}
+
+.genre-checkbox{
+
+}
+
+.publisher-checkbox{}

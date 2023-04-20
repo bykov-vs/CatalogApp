@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BooksForever.Шестерка воронов</title>
+    <link rel="stylesheet" href="../css/main.css"/>
+    <link rel="stylesheet" href="../css/about-book.css"/>
+</head>
+<body>
+    <div class="main-container">
+        <header class="header-nav">
+            <span class="site-name">BooksForever</span>
+            <nav class="main-nav">
+                <ul class="nav-ul">
+                    <li><a href="../index.html">Главная</a></li>
+                    <li><a href="./catalog.html">Каталог</a></a>
+                    <li><a href="./catalog.html">Подборки</a></li>
+                    <li><a href="./articles.html">Статьи</a></li>
+                </ul>
+            </nav>
+            <div class="login">
+                <ul>
+                    <li class="login-li"><a href="#">Регистрация</a></li>
+                    <li class="login-li"><a href="#">Войти</a></li>
+                </ul>
+            </div>
+        </header>
+        <main class="content-container">
+            <p class="btn-back" style="font-size: 24px;"><a onclick="window.history.back()">НАЗАД</a></p>
+            <div class="book">
+                <div class="slideshow-container">
+                    <div class="mySlides">
+                        <img src="../images/sixofcrows.jpg" width="55%" height="55%" alt="Шестерка воронов"/>
+                    </div>
+                    <div class="mySlides">
+                        <img src="../images/sox2.png" width="55%" height="55%" alt="Шестерка воронов"/>
+                    </div>
+                    <div class="mySlides">
+                        <img src="../images/sox3.jpg" width="55%" height="55%" alt="Шестерка воронов"/>
+                    </div>
+                    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+                </div>
+                <script>
+                    var slideIndex = 1;
+                    showSlides(slideIndex);
+
+                    function plusSlides(n) {
+                    showSlides(slideIndex += n);
+                    }
+
+                    function currentSlide(n) {
+                    showSlides(slideIndex = n);
+                    }
+
+                    function showSlides(n) {
+                        var i;
+                        var slides = document.getElementsByClassName("mySlides");
+                        if (n > slides.length) {slideIndex = 1}
+                        if (n < 1) {slideIndex = slides.length}
+                        for (i = 0; i < slides.length; i++) {
+                            slides[i].style.display = "none";
+                        } 
+                        slides[slideIndex-1].style.display = "block";
+                    }
+                </script>
+                <div class="book-info">
+                    <ul>
+                        <li>Автор: Бардуго Ли</li>
+                        <li>Жанр: Фентези</li>
+                        <li>Страниц: 576</li>
+                        <li>Издательство: АСТ</li>
+                        <li>Год издания: 2021</li>
+                    </ul>
+                    
+                </div>
+                <div class="related-publications">
+                    <h3>Схожие публикации:</h3>
+                    <div class="related-publications-element">
+                        <div>
+                            <p><a href="crooked-kingdom.html">Продажное королевство</a></p>
+                            <p>Автор: Бардуго Ли</p>
+                        </div>
+                        <img src="../images/prodajnoe-korolevstvo.jpg" width="25%" height="25%" alt="Продажное королевство"/>
+                    </div>
+                </div>
+            </div>
+            <div class="description">  
+                <p>Кеттердам – шумный центр международной торговли, где по сходной цене можно купить все, и лучше других это знает юный гений преступного мира Каз Бреккер. Ему выпадает шанс на ограбление века, которое может сделать его невообразимо богатым. Но один он не справится...
+                    Узник, обуреваемый жаждой мести. Стрелок, который любит испытывать судьбу. Беглец из высших слоев общества. Шпионка, известная под кличкой Призрак. Девушка из магического ордена гришей с необычным даром. Вор с талантом выходить сухим из воды.
+                    Шесть опасных изгоев. Одно невозможное похищение.
+                </p>
+            </div>
+            
+            <div class="comments">
+                <h2>Отзывы</h2>
+                <div class="comment">
+                    <p>Тут пока ничего нет :(</p>
+                </div>
+            </div>
+        </main>
+        <footer class="main-footer">
+            <div class="footer-content">
+                <p>Контакты</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

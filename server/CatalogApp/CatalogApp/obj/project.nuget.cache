@@ -1,0 +1,24 @@
+{
+  "version": 2,
+  "dgSpecHash": "S2de3IF0DvUD/7bgdDZVBdb+6nDZCgtLYd6KwJIgwhWfuwkZR6lsVcrF1DOcMm50GPrF1N5omDWsOMQYEGuUiw==",
+  "success": true,
+  "projectFilePath": "D:\\Projects\\учёба\\семестр_8\\пси\\server\\CatalogApp\\CatalogApp\\CatalogApp.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Zeal\\.nuget\\packages\\microsoft.entityframeworkcore\\8.0.0-preview.2.23128.3\\microsoft.entityframeworkcore.8.0.0-preview.2.23128.3.nupkg.sha512",
+    "C:\\Users\\Zeal\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\8.0.0-preview.2.23128.3\\microsoft.entityframeworkcore.abstractions.8.0.0-preview.2.23128.3.nupkg.sha512",
+    "C:\\Users\\Zeal\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\8.0.0-preview.2.23128.3\\microsoft.entityframeworkcore.analyzers.8.0.0-preview.2.23128.3.nupkg.sha512",
+    "C:\\Users\\Zeal\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\8.0.0-preview.2.23128.3\\microsoft.entityframeworkcore.relational.8.0.0-preview.2.23128.3.nupkg.sha512",
+    "C:\\Users\\Zeal\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\8.0.0-preview.2.23128.3\\microsoft.extensions.caching.abstractions.8.0.0-preview.2.23128.3.nupkg.sha512",
+    "C:\\Users\\Zeal\\.nuget\\packages\\microsoft.extensions.caching.memory\\8.0.0-preview.2.23128.3\\microsoft.extensions.caching.memory.8.0.0-preview.2.23128.3.nupkg.sha512",
+    "C:\\Users\\Zeal\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\8.0.0-preview.2.23128.3\\microsoft.extensions.configuration.abstractions.8.0.0-preview.2.23128.3.nupkg.sha512",
+    "C:\\Users\\Zeal\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\8.0.0-preview.2.23128.3\\microsoft.extensions.dependencyinjection.8.0.0-preview.2.23128.3.nupkg.sha512",
+    "C:\\Users\\Zeal\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0-preview.2.23128.3\\microsoft.extensions.dependencyinjection.abstractions.8.0.0-preview.2.23128.3.nupkg.sha512",
+    "C:\\Users\\Zeal\\.nuget\\packages\\microsoft.extensions.logging\\8.0.0-preview.2.23128.3\\microsoft.extensions.logging.8.0.0-preview.2.23128.3.nupkg.sha512",
+    "C:\\Users\\Zeal\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\8.0.0-preview.2.23128.3\\microsoft.extensions.logging.abstractions.8.0.0-preview.2.23128.3.nupkg.sha512",
+    "C:\\Users\\Zeal\\.nuget\\packages\\microsoft.extensions.options\\8.0.0-preview.2.23128.3\\microsoft.extensions.options.8.0.0-preview.2.23128.3.nupkg.sha512",
+    "C:\\Users\\Zeal\\.nuget\\packages\\microsoft.extensions.primitives\\8.0.0-preview.2.23128.3\\microsoft.extensions.primitives.8.0.0-preview.2.23128.3.nupkg.sha512",
+    "C:\\Users\\Zeal\\.nuget\\packages\\npgsql\\8.0.0-preview.2\\npgsql.8.0.0-preview.2.nupkg.sha512",
+    "C:\\Users\\Zeal\\.nuget\\packages\\npgsql.entityframeworkcore.postgresql\\8.0.0-preview.2\\npgsql.entityframeworkcore.postgresql.8.0.0-preview.2.nupkg.sha512"
+  ],
+  "logs": []
+}
